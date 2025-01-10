@@ -10,7 +10,11 @@ async function startChat() {
       break;
     }
     console.clear(); // Clear the screen
-    console.log(`You: ${line}`); 
+    // Send the user input to the daemon
+    const response = await fetch(`http://localhost:8000/?model=openai&input=${encodeURIComponent(line)}`);
+    const responseText = await response.text();
+    console.log(`You: ${line}`);
+    console.log(`Response: ${responseText}`);
     // Here you can add logic to process the chat input
   }
 }
