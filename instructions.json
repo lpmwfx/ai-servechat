@@ -10,10 +10,10 @@
     ],
     "development_environment": {
         "language": "TypeScript",
-        "runtime": "node",
+        "runtime": "dotNet C#",
         "test_framework": "Jest",
         "build_process": "Compile to /bin and test in terminal after each sprint",
-        "dependency_management": "Ensure all dependencies are the latest and compatible. Use node's built-in module system to manage dependencies effectively.",
+        "dependency_management": "Ensure all dependencies are the latest and compatible. Use C#'s built-in module system to manage dependencies effectively.",
         "environment_variables": [
             "DEEPSEEK_API_KEY - API key for Deepseek AI",
             "ANTHROPIC_API_KEY - API key for Anthropic (Claude)",
@@ -32,8 +32,8 @@
                         "Implement a timeout mechanism to detect inactivity.",
                         "Develop a shutdown function to terminate the daemon cleanly.",
                         "Ensure the daemon can handle multiple instances.",
-                        "Integrate WebSocket support using node's native UpgradeWebSocket API.",
-                        "Test functionality extensively with Jest until error-free.",
+                        "Integrate WebSocket support using C#'s native UpgradeWebSocket API.",
+                        "Test functionality extensively with MSTest until error-free.",
                         "Run end-to-end (E2E) tests on the compiled daemon to ensure all functionality works as expected in the runtime environment.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
@@ -45,7 +45,7 @@
                     "steps": [
                         "Implement a CLI-based user interface for starting and stopping chats and starting and stopping the daemon.",
                         "Enable session-based interactions in the terminal.",
-                        "Test CLI usability with Jest and terminal-based scenarios.",
+                        "Test CLI usability with MSTest and terminal-based scenarios.",
                         "Run real-world tests on the compiled CLI to validate interaction flows.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
@@ -58,7 +58,7 @@
                         "Save each chat log as a JSON file in the user's working directory.",
                         "Ensure chat logs include timestamps and session metadata.",
                         "Allow users to resume chats from existing JSON logs.",
-                        "Verify log correctness and resumption functionality with Jest tests.",
+                        "Verify log correctness and resumption functionality with MSTest tests.",
                         "Run real-world tests to ensure chat logs behave as expected in the runtime environment.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
@@ -86,7 +86,7 @@
                     "steps": [
                         "Implement an alias system for frequently used commands.",
                         "Allow commands to be defined and saved in JSON format.",
-                        "Test command customization thoroughly with Jest.",
+                        "Test command customization thoroughly with MSTest.",
                         "Run real-world tests to ensure commands execute correctly in the compiled environment.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
@@ -98,7 +98,7 @@
                     "steps": [
                         "Design a directory structure for plugins.",
                         "Enable dynamic loading of plugins at runtime.",
-                        "Test plugin loading and execution with Jest.",
+                        "Test plugin loading and execution with MSTest.",
                         "Run E2E tests on the compiled system to ensure plugin behavior aligns with expectations.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
@@ -111,7 +111,7 @@
                         "Develop a unified API for interacting with multiple providers.",
                         "Enable parallel execution of multiple models.",
                         "Introduce SQLite for better data management.",
-                        "Verify advanced functionalities with comprehensive Jest tests.",
+                        "Verify advanced functionalities with comprehensive MSTest tests.",
                         "Run E2E tests to validate multi-model execution in the compiled environment.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
                         "Update README.md with features and usage instructions."
