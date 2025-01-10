@@ -1,59 +1,81 @@
-import { serve } from "https://deno.land/std/http/server.ts"; // Ensure this import is correct
-export type Request = { url: string; respond: (response: Response) => void }; // Define Request type
+import { WebSocketServer, WebSocket } from 'ws';
+import { createServer } from 'http';
 
-const TIMEOUT_DURATION = 300000; // 5 minutes
-let inactivityTimer: ReturnType<typeof setTimeout> | undefined;
+export class ChatDaemon {
+  private wss: WebSocketServer;
+  private inactivityTimer?: NodeJS.Timeout;
+  private inactivityTimeout: number;
+  private port: number;
 
-const resetInactivityTimer = () => {
-  if (inactivityTimer) {
-    clearTimeout(inactivityTimer);
-  }
-  inactivityTimer = setTimeout(() => {
-    console.log("Shutting down due to inactivity...");
-    Deno.exit(0); // Ensure Deno is recognized
-  }, TIMEOUT_DURATION);
-};
+  constructor(port: number = 8080, timeout: number = 300000) {
+    this.port = port;
+    this.inactivityTimeout = timeout;
+    const server = createServer();
+    this.wss = new WebSocketServer({ server });
+    
+    server.listen(this.port, () => {
+      console.log(`Chat daemon running on ws://localhost:${this.port}`);
+    });
 
-export const handleRequest = async (req: Request) => {
-  resetInactivityTimer();
-  
-  const url = new URL(req.url);
-  const model = url.searchParams.get("model"); // Get the model from query parameters
-  const userInput = url.searchParams.get("input"); // Get user input from query parameters
-
-  if (!userInput) {
-    return new Response("Input is required.", { status: 400 });
-  }
-  
-  if (!model) {
-    return new Response("Model is required.", { status: 400 });
+    this.setupWebSocketHandlers();
+    this.resetInactivityTimer();
   }
 
-  let responseText = "Model not recognized.";
-  
-  if (model === "openai") {
-    responseText = await callOpenAI(userInput);
-  } else if (model === "claude") {
-    responseText = await callClaude(userInput);
+  private setupWebSocketHandlers() {
+    this.wss.on('connection', (ws: WebSocket) => {
+      console.log('New client connected');
+      this.resetInactivityTimer();
+
+      ws.on('message', (message: string) => {
+        console.log('Received:', message.toString());
+        this.resetInactivityTimer();
+      });
+
+      ws.on('close', () => {
+        console.log('Client disconnected');
+        if (this.wss.clients.size === 0) {
+          this.resetInactivityTimer();
+        }
+      });
+    });
   }
 
-  return new Response(responseText);
-};
+  private resetInactivityTimer() {
+    if (this.inactivityTimer) {
+      clearTimeout(this.inactivityTimer);
+    }
+    
+    this.inactivityTimer = setTimeout(() => {
+      console.log('Inactivity timeout reached. Shutting down...');
+      this.shutdown();
+    }, this.inactivityTimeout);
+  }
 
-const callOpenAI = async (input: string) => {
-  // Implement OpenAI API call logic here
-  return `OpenAI response for: ${input}`;
-};
+  private async shutdown() {
+    // Close all client connections
+    const closePromises = Array.from(this.wss.clients).map((client) => {
+      return new Promise<void>((resolve) => {
+        if (client.readyState === WebSocket.OPEN) {
+          client.close();
+          client.on('close', resolve);
+        } else {
+          resolve();
+        }
+      });
+    });
 
-const callClaude = async (input: string) => {
-  // Implement Claude API call logic here
-  return `Claude response for: ${input}`;
-};
-
-const server = await serve({ port: 8000 });
-console.log("Server running on http://localhost:8000");
-
-for await (const req of server) {
-  const response = await handleRequest(req);
-  req.respond(response);
+    await Promise.all(closePromises);
+    
+    // Close the server
+    return new Promise<void>((resolve) => {
+      this.wss.close(() => {
+        if (process.env.NODE_ENV !== 'test') {
+          process.exit(0);
+        }
+        resolve();
+      });
+    });
+  }
 }
+
+new ChatDaemon();

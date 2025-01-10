@@ -10,10 +10,10 @@
     ],
     "development_environment": {
         "language": "TypeScript",
-        "runtime": "Deno",
+        "runtime": "node",
         "test_framework": "Jest",
         "build_process": "Compile to /bin and test in terminal after each sprint",
-        "dependency_management": "Ensure all dependencies are the latest and compatible. Use Deno's built-in module system to manage dependencies effectively.",
+        "dependency_management": "Ensure all dependencies are the latest and compatible. Use node's built-in module system to manage dependencies effectively.",
         "environment_variables": [
             "DEEPSEEK_API_KEY - API key for Deepseek AI",
             "ANTHROPIC_API_KEY - API key for Anthropic (Claude)",
@@ -32,7 +32,7 @@
                         "Implement a timeout mechanism to detect inactivity.",
                         "Develop a shutdown function to terminate the daemon cleanly.",
                         "Ensure the daemon can handle multiple instances.",
-                        "Integrate WebSocket support using Deno's native UpgradeWebSocket API.",
+                        "Integrate WebSocket support using node's native UpgradeWebSocket API.",
                         "Test functionality extensively with Jest until error-free.",
                         "Run end-to-end (E2E) tests on the compiled daemon to ensure all functionality works as expected in the runtime environment.",
                         "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
@@ -43,7 +43,7 @@
                     "name": "Terminal UI",
                     "description": "Build a terminal-based UI for user interaction.",
                     "steps": [
-                        "Implement a CLI-based user interface for starting and stopping chats using Cliffy.",
+                        "Implement a CLI-based user interface for starting and stopping chats and starting and stopping the daemon.",
                         "Enable session-based interactions in the terminal.",
                         "Test CLI usability with Jest and terminal-based scenarios.",
                         "Run real-world tests on the compiled CLI to validate interaction flows.",
