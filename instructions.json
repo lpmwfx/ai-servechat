@@ -1,0 +1,176 @@
+{
+    "project_name": "ai-serve",
+    "description": "A modular and extensible LLM service designed for integrating multiple language models (e.g., OpenAI, Claude) into apps like InkyAI. The service operates as a headless backend with RESTful and WebSocket interfaces.",
+    "goals": [
+        "Develop a headless LLM backend service with extensible architecture.",
+        "Support integration with multiple language models (e.g., GPT-4, Claude).",
+        "Clarify and implement RESTful and WebSocket APIs for specific functionalities to ensure seamless UI interaction.",
+        "Ensure modularity for alias-based switching between models.",
+        "Enable compatibility with Proton HTML5 UI for dynamic frontend updates, including specific APIs for message exchange and standard JSON structures for responses to align with UI expectations."
+    ],
+    "development_environment": {
+        "language": "TypeScript",
+        "runtime": "Deno",
+        "test_framework": "Jest",
+        "build_process": "Compile to /bin and test in terminal after each sprint",
+        "dependency_management": "Ensure all dependencies are the latest and compatible. Use Deno's built-in module system to manage dependencies effectively.",
+        "environment_variables": [
+            "DEEPSEEK_API_KEY - API key for Deepseek AI",
+            "ANTHROPIC_API_KEY - API key for Anthropic (Claude)",
+            "OPENAI_API_KEY - API key for OpenAI",
+            "GEMINI_API_KEY - API key for Google's Gemini AI"
+        ]
+    },
+    "step_by_step_plan": [
+        {
+            "step": "Sprint 1: Basic Chat Daemon",
+            "tasks": [
+                {
+                    "name": "Daemon Setup",
+                    "description": "Develop a chat daemon that can shut itself down after prolonged inactivity.",
+                    "steps": [
+                        "Implement a timeout mechanism to detect inactivity.",
+                        "Develop a shutdown function to terminate the daemon cleanly.",
+                        "Ensure the daemon can handle multiple instances.",
+                        "Integrate WebSocket support using Deno's native UpgradeWebSocket API.",
+                        "Test functionality extensively with Jest until error-free.",
+                        "Run end-to-end (E2E) tests on the compiled daemon to ensure all functionality works as expected in the runtime environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Terminal UI",
+                    "description": "Build a terminal-based UI for user interaction.",
+                    "steps": [
+                        "Implement a CLI-based user interface for starting and stopping chats using Cliffy.",
+                        "Enable session-based interactions in the terminal.",
+                        "Test CLI usability with Jest and terminal-based scenarios.",
+                        "Run real-world tests on the compiled CLI to validate interaction flows.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Project-Based Chat Logging",
+                    "description": "Enable chat logging in JSON format for project-based organization.",
+                    "steps": [
+                        "Save each chat log as a JSON file in the user's working directory.",
+                        "Ensure chat logs include timestamps and session metadata.",
+                        "Allow users to resume chats from existing JSON logs.",
+                        "Verify log correctness and resumption functionality with Jest tests.",
+                        "Run real-world tests to ensure chat logs behave as expected in the runtime environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Compile and Test",
+                    "description": "Compile the daemon and test the complete functionality in the terminal.",
+                    "steps": [
+                        "Build the project to /bin.",
+                        "Run comprehensive manual and automated tests to ensure terminal compatibility.",
+                        "Run full E2E tests on the compiled application to verify all interactions and features.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                }
+            ]
+        },
+        {
+            "step": "Sprint 2: Plugin System and Advanced Features",
+            "tasks": [
+                {
+                    "name": "Custom Commands",
+                    "description": "Enable users to define custom commands.",
+                    "steps": [
+                        "Implement an alias system for frequently used commands.",
+                        "Allow commands to be defined and saved in JSON format.",
+                        "Test command customization thoroughly with Jest.",
+                        "Run real-world tests to ensure commands execute correctly in the compiled environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Plugin System",
+                    "description": "Move model and provider definitions to plugin JSON files.",
+                    "steps": [
+                        "Design a directory structure for plugins.",
+                        "Enable dynamic loading of plugins at runtime.",
+                        "Test plugin loading and execution with Jest.",
+                        "Run E2E tests on the compiled system to ensure plugin behavior aligns with expectations.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Advanced Model Management",
+                    "description": "Support advanced model usage and multi-model execution across providers.",
+                    "steps": [
+                        "Develop a unified API for interacting with multiple providers.",
+                        "Enable parallel execution of multiple models.",
+                        "Introduce SQLite for better data management.",
+                        "Verify advanced functionalities with comprehensive Jest tests.",
+                        "Run E2E tests to validate multi-model execution in the compiled environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Compile and Test",
+                    "description": "Compile the updated system and ensure all features work flawlessly.",
+                    "steps": [
+                        "Build the project to /bin.",
+                        "Run manual and Jest-based tests in the terminal.",
+                        "Run full E2E tests on the compiled application to validate feature integration.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                }
+            ]
+        },
+        {
+            "step": "Sprint 3: Redis Integration and Remaining Features",
+            "tasks": [
+                {
+                    "name": "Redis Integration",
+                    "description": "Incorporate Redis for session management and caching.",
+                    "steps": [
+                        "Set up Redis for transient data storage.",
+                        "Integrate Redis with the daemon for faster session handling.",
+                        "Enable caching of frequently accessed data.",
+                        "Test Redis integration and performance with Jest.",
+                        "Run E2E tests to ensure Redis functionality in the compiled environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Remaining Features",
+                    "description": "Implement remaining advanced features from earlier phases.",
+                    "steps": [
+                        "Finalize WebSocket support for real-time interaction.",
+                        "Add enhanced logging and monitoring capabilities.",
+                        "Expand plugin support by enabling additional plugin formats (e.g., YAML, TOML), improving runtime performance by minimizing redundant operations, and enhancing developer documentation with detailed plugin examples and integration guides to increase extensibility.",
+                        "Test all additional features rigorously with Jest.",
+                        "Run E2E tests to validate all features in the compiled environment.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                },
+                {
+                    "name": "Compile and Test",
+                    "description": "Finalize the build and test Redis-enabled functionality.",
+                    "steps": [
+                        "Build the project to /bin.",
+                        "Perform comprehensive manual and Jest-based tests in the terminal.",
+                        "Run full E2E tests on the compiled application to ensure complete functionality.",
+                        "Automate git commits after successful tests with clear commit messages describing changes and functionality.",
+                        "Update README.md with features and usage instructions."
+                    ]
+                }
+            ]
+        }
+    ]
+}
